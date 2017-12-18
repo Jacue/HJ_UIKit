@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import <YYText/YYLabel.h>
-#import "LNAlertManager.h"
+#import <HJ_UIKit/HJPriorityManager.h>
 
-@interface LNAlertView : UIView <LNAlertProtocol>
+@interface LNAlertView : UIView <HJPriorityProtocol>
 
 // 提供设置“取消”、“确定”的block，避免在实例化方法中设置，导致代码块太大
 @property (nonatomic, copy) void(^confirmButtonClickBlock)(void);
@@ -38,7 +38,6 @@
  @param message 提示内容
  @param confirmButtonTitle 确定按钮的文案
  @param confirmBlock 确定的操作
- @param revokable 是否展示右上角“X”按钮
  @return 实例化弹窗对象
  */
 - (LNAlertView *)initWithTitle:(NSString *)title
@@ -50,7 +49,7 @@
  实例化方法
  
  @param title 标题，在无右上角“X”按钮的情况下为加粗样式
- @param message 提示内容
+ @param attributeMessage 提示内容
  @param confirmButtonTitle 确定按钮的文案
  @param confirmBlock 确定的操作
  @return 实例化弹窗对象
@@ -97,7 +96,7 @@
  *
  *	@param 	title 	标题
  *	@param 	message 	内容
- *	@param 	cancelButtonName 	左侧按钮名字
+ *	@param 	cancelButtonTitle 	左侧按钮名字
  *	@param 	confirmButtonTitle 	右侧按钮名字
  *
  *	@return	id UIAlertView

@@ -135,6 +135,8 @@ Pod::Spec.new do |s|
     s.subspec 'HJAlertView' do |alertView|
       alertView.source_files = 'HJ_UIKit/Classes/HJAlertView/**/*'
       alertView.public_header_files = 'HJ_UIKit/Classes/HJAlertView/**/*.h'
+      alertView.dependency 'YYText'
+      alertView.dependency 'Masonry'
   end
 
 

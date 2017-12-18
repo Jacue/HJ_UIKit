@@ -7,8 +7,8 @@
 //
 
 #import "LNAlertView.h"
-#import "TPCoreAnimationEffect.h"
 #import <YYText/YYText.h>
+#import <Masonry/Masonry.h>
 
 @interface LNAlertView()
 @property (weak, nonatomic) IBOutlet UILabel *myMessageLabel;
@@ -96,7 +96,7 @@
  实例化方法
  
  @param title 标题，在无右上角“X”按钮的情况下为加粗样式
- @param message 提示内容
+ @param attributeMessage 提示内容
  @param cancelButtonTitle 取消按钮的文案
  @param confirmButtonTitle 确定按钮的文案
  @param cancelBlock 取消的操作
@@ -236,7 +236,7 @@
             dispatch_async(dispatch_get_main_queue(), ^{
                 //设置界面的按钮显示 根据自己需求设置
                  [_confirmButton setTitle:tittle forState:UIControlStateNormal];
-                 [_confirmButton setTitleColor:RGBCOLORV(0x3097fd) forState:UIControlStateNormal];
+                 [_confirmButton setTitleColor:[UIColor blueColor] forState:UIControlStateNormal];
                  _confirmButton.userInteractionEnabled = YES;
             });
         }else{
@@ -297,7 +297,7 @@
 
     [self removeFromSuperview];
     
-    [[LNAlertManager sharedManager] dismissCurrentAlertViewManually:isManual];
+    [[HJPriorityManager sharedManager] dismissCurrentAlertViewManually:isManual];
 }
 
 #pragma mark - LNAlertProtocol
