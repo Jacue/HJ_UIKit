@@ -1,5 +1,5 @@
 //
-//  LNAlertView.h
+//  HJAlertView.h
 //  Loan
 //
 //  Created by muzhenhua on 16/6/20.
@@ -10,24 +10,27 @@
 #import <YYText/YYLabel.h>
 #import <HJ_UIKit/HJPriorityManager.h>
 
-@interface LNAlertView : UIView <HJPriorityProtocol>
+typedef void(^ClickBlock)(void);
+
+@interface HJAlertView : UIView <HJPriorityProtocol>
 
 // 提供设置“取消”、“确定”的block，避免在实例化方法中设置，导致代码块太大
-@property (nonatomic, copy) void(^confirmButtonClickBlock)(void);
-@property (nonatomic, copy) void(^closeButtonClickBlock)(void);
+@property (nonatomic, copy) ClickBlock confirmBlock;
+@property (nonatomic, copy) ClickBlock cancelBlock;
 
 // 提供给外部设置富文本
-@property (weak, nonatomic) IBOutlet UILabel *titleLabel;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleLabelTopPadding;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelBottomPadding;
+@property (strong, nonatomic)  YYLabel *titleLabel;
 @property (strong, nonatomic) YYLabel *messageLabel;
 
 // 强制阅读(confirmButton按钮效果)
 @property (nonatomic, assign) BOOL forceRead;
+
 // 弹窗优先级
 @property (nonatomic, assign) NSInteger alertLevel;
+
 // 是否展示右上角“X”按钮,默认不显示
 @property (nonatomic, assign) BOOL revokable;
+
 // 点击“确定”／“取消”弹框不消失，需要等到特定时机手动dismiss
 @property (nonatomic, assign) BOOL keepAlive;
 
@@ -40,7 +43,7 @@
  @param confirmBlock 确定的操作
  @return 实例化弹窗对象
  */
-- (LNAlertView *)initWithTitle:(NSString *)title
+- (HJAlertView *)initWithTitle:(NSString *)title
                        message:(NSString *)message
             confirmButtonTitle:(NSString *)confirmButtonTitle
                   confirmBlock:(void(^)(void))confirmBlock;
@@ -54,7 +57,7 @@
  @param confirmBlock 确定的操作
  @return 实例化弹窗对象
  */
-- (LNAlertView *)initWithTitle:(NSString *)title
+- (HJAlertView *)initWithTitle:(NSString *)title
               attributeMessage:(NSAttributedString *)attributeMessage
             confirmButtonTitle:(NSString *)confirmButtonTitle
                   confirmBlock:(void(^)(void))confirmBlock;
@@ -68,7 +71,7 @@
  @param confirmBlock 确定的操作
  @return 实例化弹窗对象
  */
-- (LNAlertView *)initWithTitle:(NSString *)title
+- (HJAlertView *)initWithTitle:(NSString *)title
                        message:(NSString *)message
                    cancelBlock:(void(^)(void))cancelBlock
                   confirmBlock:(void(^)(void))confirmBlock;
@@ -84,7 +87,7 @@
  @param confirmBlock 确定的操作
  @return 实例化弹窗对象
  */
-- (LNAlertView *)initWithTitle:(NSString *)title
+- (HJAlertView *)initWithTitle:(NSString *)title
                        message:(NSString *)message
              cancelButtonTitle:(NSString *)cancelButtonTitle
             confirmButtonTitle:(NSString *)confirmButtonTitle

@@ -136,6 +136,10 @@ Pod::Spec.new do |s|
       alertView.source_files = 'HJ_UIKit/Classes/HJAlertView/**/*'
       alertView.public_header_files = 'HJ_UIKit/Classes/HJAlertView/**/*.h'
       alertView.dependency 'YYText'
+      # alertView.resource = "HJ_UIKit/Assets/HJAlertView/**/*.png"
+      alertView.resource_bundles = {
+        'HJAlertView' => ['HJ_UIKit/Assets/HJAlertView/**/*.png']
+      }
       alertView.dependency 'Masonry'
   end
 
