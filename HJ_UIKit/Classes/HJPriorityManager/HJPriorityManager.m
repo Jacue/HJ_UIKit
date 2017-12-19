@@ -7,6 +7,7 @@
 //
 
 #import "HJPriorityManager.h"
+#import "HJPriorityManagedModel.h"
 
 typedef void(^AlertBlock)(void);
 
@@ -23,6 +24,8 @@ typedef void(^AlertBlock)(void);
 // 延迟展示的弹层操作
 @property (nonatomic,strong) NSMutableArray<AlertBlock> *lowPriorityAlertBlockArray;
 
+@property (nonatomic, strong) NSMutableArray<HJPriorityManagedModel *> *managedObjects;
+
 
 @end
 
@@ -33,8 +36,9 @@ typedef void(^AlertBlock)(void);
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[self alloc] init];
-        instance.lowPriorityAlertViewArray = [NSMutableArray array];
-        instance.lowPriorityAlertBlockArray = [NSMutableArray array];
+//        instance.lowPriorityAlertViewArray = [NSMutableArray array];
+//        instance.lowPriorityAlertBlockArray = [NSMutableArray array];
+        instance.managedObjects = [NSMutableArray array];
     });
     return instance;
 }
@@ -127,5 +131,49 @@ typedef void(^AlertBlock)(void);
         [_lowPriorityAlertBlockArray addObject:alertBlock];
     }
 }
+
+
+- (void)show:(id<HJPriorityProtocol>)object withPresentBlock:(void(^)(void))presentBlock dismissBlock:(void(^)(void))dismissBlock {
+    
+    HJPriorityManagedModel *model = [[HJPriorityManagedModel alloc] init];
+    model.managedObject = object;
+    model.presentBlock = presentBlock;
+    model.dismissBlock = dismissBlock;
+    
+    [self addManagedObject:model];
+    
+    
+    
+    
+    
+    
+}
+
+
+
+
+
+- (void)addManagedObject:(HJPriorityManagedModel *)object {
+    
+    NSArray<HJPriorityManagedModel *> *copyArray = self.managedObjects.copy;
+    
+    __block NSUInteger index = 0;
+    
+    [copyArray enumerateObjectsUsingBlock:^(HJPriorityManagedModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        if (obj) {
+            if ([object.managedObject level] < [obj.managedObject level]) {
+                index = idx;
+                *stop = YES;
+            }
+        }
+    }];
+    
+    [self.managedObjects insertObject:object atIndex:index];
+}
+
+
+
+
+
 
 @end
