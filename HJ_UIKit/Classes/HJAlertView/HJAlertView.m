@@ -289,20 +289,12 @@
 
 - (void)dismissManually:(BOOL)isManual {
     [self removeFromSuperview];
-    [[HJPriorityManager sharedManager] dismissCurrentAlertViewManually:isManual];
 }
 
 #pragma mark - LNAlertProtocol
 
 - (NSInteger)level {
     return self.alertLevel;
-}
-
-- (void)dismissWithCompletion:(void (^)(void))completionBlock {
-    [self dismissManually:NO];
-    if (completionBlock) {
-        completionBlock();
-    }
 }
 
 #pragma mark - Getter

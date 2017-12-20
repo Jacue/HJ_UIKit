@@ -13,8 +13,8 @@ typedef void(^Block)(void);
 
 @interface HJPriorityManagedModel : NSObject
 
-// 按优先级管理的对象
-@property (nonatomic,strong) id<HJPriorityProtocol> managedObject;
+// 优先级,数组越大表示优先级越高
+@property (nonatomic, assign) NSUInteger priorityLevel;
 
 // 展现的操作
 @property (nonatomic,copy) Block presentBlock;

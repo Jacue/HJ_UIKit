@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4B22190A1FEA780F0046BB2A /* HJ_UIKit.podspec in Resources */ = {isa = PBXBuildFile; fileRef = 4B2219081FEA780F0046BB2A /* HJ_UIKit.podspec */; };
+		4B22190B1FEA780F0046BB2A /* LICENSE in Resources */ = {isa = PBXBuildFile; fileRef = 4B2219091FEA780F0046BB2A /* LICENSE */; };
 		4B2646E61FE7BFEF00718BD1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2646E51FE7BFEF00718BD1 /* AppDelegate.m */; };
 		4B2646E91FE7BFEF00718BD1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4B2646E81FE7BFEF00718BD1 /* ViewController.m */; };
 		4B2646EC1FE7BFEF00718BD1 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4B2646EA1FE7BFEF00718BD1 /* Main.storyboard */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		371BCC9C9991635104EE91B5 /* Pods_Demo.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Demo.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4854E28F62685AE2B1154062 /* Pods-Demo.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Demo.release.xcconfig"; path = "Pods/Target Support Files/Pods-Demo/Pods-Demo.release.xcconfig"; sourceTree = "<group>"; };
+		4B2219081FEA780F0046BB2A /* HJ_UIKit.podspec */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = HJ_UIKit.podspec; path = ../../HJ_UIKit.podspec; sourceTree = "<group>"; };
+		4B2219091FEA780F0046BB2A /* LICENSE */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE; path = ../../LICENSE; sourceTree = "<group>"; };
 		4B2646E11FE7BFEF00718BD1 /* Demo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Demo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4B2646E41FE7BFEF00718BD1 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		4B2646E51FE7BFEF00718BD1 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -44,9 +48,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4B2219071FEA77F50046BB2A /* Podspec Metadata */ = {
+			isa = PBXGroup;
+			children = (
+				4B2219081FEA780F0046BB2A /* HJ_UIKit.podspec */,
+				4B2219091FEA780F0046BB2A /* LICENSE */,
+			);
+			path = "Podspec Metadata";
+			sourceTree = "<group>";
+		};
 		4B2646D81FE7BFEF00718BD1 = {
 			isa = PBXGroup;
 			children = (
+				4B2219071FEA77F50046BB2A /* Podspec Metadata */,
 				4B2646E31FE7BFEF00718BD1 /* Demo */,
 				4B2646E21FE7BFEF00718BD1 /* Products */,
 				B5DDF97539CE2655D1407F65 /* Pods */,
@@ -159,6 +173,8 @@
 				4B2646F11FE7BFEF00718BD1 /* LaunchScreen.storyboard in Resources */,
 				4B2646EE1FE7BFEF00718BD1 /* Assets.xcassets in Resources */,
 				4B2646EC1FE7BFEF00718BD1 /* Main.storyboard in Resources */,
+				4B22190A1FEA780F0046BB2A /* HJ_UIKit.podspec in Resources */,
+				4B22190B1FEA780F0046BB2A /* LICENSE in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

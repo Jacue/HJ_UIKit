@@ -132,13 +132,14 @@ typedef void(^AlertBlock)(void);
     }
 }
 
+// https://onevcat.com/2011/11/objc-block/
 
-- (void)show:(id<HJPriorityProtocol>)object withPresentBlock:(void(^)(void))presentBlock dismissBlock:(void(^)(void))dismissBlock {
+- (void)execute:(void(^)(void))presentBlock withDismissBlock:(void(^)(void))dismissBlock priority:(NSUInteger)priorityLevel {
     
     HJPriorityManagedModel *model = [[HJPriorityManagedModel alloc] init];
-    model.managedObject = object;
     model.presentBlock = presentBlock;
     model.dismissBlock = dismissBlock;
+    model.priorityLevel = priorityLevel;
     
     [self addManagedObject:model];
     
@@ -153,6 +154,12 @@ typedef void(^AlertBlock)(void);
 
 
 
+/**
+ 添加对象到优先级管理队列中
+ 队列按照优先级从低到高排列
+
+ @param object 优先级管理对象
+ */
 - (void)addManagedObject:(HJPriorityManagedModel *)object {
     
     NSArray<HJPriorityManagedModel *> *copyArray = self.managedObjects.copy;
@@ -161,7 +168,7 @@ typedef void(^AlertBlock)(void);
     
     [copyArray enumerateObjectsUsingBlock:^(HJPriorityManagedModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
         if (obj) {
-            if ([object.managedObject level] < [obj.managedObject level]) {
+            if (object.priorityLevel < obj.priorityLevel) {
                 index = idx;
                 *stop = YES;
             }
