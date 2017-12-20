@@ -133,6 +133,7 @@ typedef void(^AlertBlock)(void);
 }
 
 // https://onevcat.com/2011/11/objc-block/
+// http://blog.csdn.net/sharpyl/article/details/50459534
 
 - (void)execute:(void(^)(void))presentBlock withDismissBlock:(void(^)(void))dismissBlock priority:(NSUInteger)priorityLevel {
     
