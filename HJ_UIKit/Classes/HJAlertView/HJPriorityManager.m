@@ -7,7 +7,6 @@
 //
 
 #import "HJPriorityManager.h"
-#import "HJPriorityManagedModel.h"
 
 typedef void(^AlertBlock)(void);
 
@@ -15,16 +14,11 @@ typedef void(^AlertBlock)(void);
 
 // 当前展示的弹层对象（如果用户手动关闭弹层，需还原为初始值），当被优先级高的顶替时，需更新为最新的弹层对象
 @property (nonatomic,strong) id<HJPriorityProtocol> currentAlertView;
-
 @property (nonatomic,copy) AlertBlock currentAlertBlock;
-
 // 延迟展示的（优先级低的）弹层对象数组（场景1:优先级低->优先级高；场景2:优先级高->优先级低）
 @property (nonatomic,strong) NSMutableArray<id<HJPriorityProtocol>> *lowPriorityAlertViewArray;
-
 // 延迟展示的弹层操作
 @property (nonatomic,strong) NSMutableArray<AlertBlock> *lowPriorityAlertBlockArray;
-
-@property (nonatomic, strong) NSMutableArray<HJPriorityManagedModel *> *managedObjects;
 
 
 @end
@@ -36,9 +30,8 @@ typedef void(^AlertBlock)(void);
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         instance = [[self alloc] init];
-//        instance.lowPriorityAlertViewArray = [NSMutableArray array];
-//        instance.lowPriorityAlertBlockArray = [NSMutableArray array];
-        instance.managedObjects = [NSMutableArray array];
+        instance.lowPriorityAlertViewArray = [NSMutableArray array];
+        instance.lowPriorityAlertBlockArray = [NSMutableArray array];
     });
     return instance;
 }
@@ -76,7 +69,7 @@ typedef void(^AlertBlock)(void);
             id<HJPriorityProtocol> alertView = self.lowPriorityAlertViewArray[index];
             AlertBlock block = self.lowPriorityAlertBlockArray[index];
             
-            [self show:alertView showBlock:block];
+            [self show:alertView withBlock:block];
             
             // 一旦展示，就从被顶替的弹层数组中移除
             [self.lowPriorityAlertViewArray removeObjectAtIndex:index];
@@ -92,7 +85,7 @@ typedef void(^AlertBlock)(void);
  @param alertView 弹层
  @param alertBlock 弹层的展示操作
  */
-- (void)show:(id<HJPriorityProtocol> )alertView showBlock:(void(^)(void))alertBlock{
+- (void)show:(id<HJPriorityProtocol> )alertView withBlock:(void(^)(void))alertBlock{
     
     // 1:判断当前是否正在展示alertView之外的弹层，如果没有，展示alertView，并保存优先级和弹层对象
     if (!_currentAlertView) {
@@ -106,7 +99,7 @@ typedef void(^AlertBlock)(void);
     
     // 2:如果有，则判断优先级
     NSInteger newLevel = [alertView level];
-    if (newLevel > [_currentAlertView level]) {
+    if (newLevel >= [_currentAlertView level]) {
         
         __weak typeof(self)weakSelf = self;
         
@@ -132,56 +125,21 @@ typedef void(^AlertBlock)(void);
     }
 }
 
-// https://onevcat.com/2011/11/objc-block/
-// http://blog.csdn.net/sharpyl/article/details/50459534
-
-- (void)execute:(void(^)(void))presentBlock withDismissBlock:(void(^)(void))dismissBlock priority:(NSUInteger)priorityLevel {
-    
-    HJPriorityManagedModel *model = [[HJPriorityManagedModel alloc] init];
-    model.presentBlock = presentBlock;
-    model.dismissBlock = dismissBlock;
-    model.priorityLevel = priorityLevel;
-    
-    [self addManagedObject:model];
-    
-    
-    
-    
-    
-    
-}
-
-
-
-
 
 /**
- 添加对象到优先级管理队列中
- 队列按照优先级从低到高排列
+ 展示弹窗，并清除之前的所有的弹窗
 
- @param object 优先级管理对象
+ @param alertView 弹层
+ @param alertBlock 弹层的展示操作
  */
-- (void)addManagedObject:(HJPriorityManagedModel *)object {
+- (void)showAlone:(id<HJPriorityProtocol> )alertView withBlock:(void(^)(void))alertBlock {
     
-    NSArray<HJPriorityManagedModel *> *copyArray = self.managedObjects.copy;
+    [self show:alertView withBlock:alertBlock];
     
-    __block NSUInteger index = 0;
-    
-    [copyArray enumerateObjectsUsingBlock:^(HJPriorityManagedModel * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
-        if (obj) {
-            if (object.priorityLevel < obj.priorityLevel) {
-                index = idx;
-                *stop = YES;
-            }
-        }
-    }];
-    
-    [self.managedObjects insertObject:object atIndex:index];
+    if (self.lowPriorityAlertViewArray.count > 0) {
+        [self.lowPriorityAlertViewArray removeAllObjects];
+        [self.lowPriorityAlertBlockArray removeAllObjects];
+    }
 }
-
-
-
-
-
 
 @end

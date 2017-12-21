@@ -126,20 +126,13 @@ Pod::Spec.new do |s|
   # s.library   = "iconv"
   # s.libraries = "iconv", "xml2"
 
-  s.subspec 'HJPriorityManager' do |priorityManager|
-      priorityManager.source_files = 'HJ_UIKit/Classes/HJPriorityManager/**/*'
-      priorityManager.public_header_files = 'HJ_UIKit/Classes/HJPriorityManager/**/*.h'
-  end
-
-
     s.subspec 'HJAlertView' do |alertView|
       alertView.source_files = 'HJ_UIKit/Classes/HJAlertView/**/*'
       alertView.public_header_files = 'HJ_UIKit/Classes/HJAlertView/**/*.h'
-      alertView.dependency 'YYText'
-      # alertView.resource = "HJ_UIKit/Assets/HJAlertView/**/*.png"
       alertView.resource_bundles = {
         'HJAlertView' => ['HJ_UIKit/Assets/HJAlertView/**/*.png']
       }
+      alertView.dependency 'YYText'
       alertView.dependency 'Masonry'
   end
 

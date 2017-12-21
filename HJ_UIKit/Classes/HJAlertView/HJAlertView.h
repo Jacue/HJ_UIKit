@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import <YYText/YYLabel.h>
+#import "HJPriorityManager.h"
 
 typedef void(^ClickBlock)(void);
 
-@interface HJAlertView : UIView 
+@interface HJAlertView : UIView <HJPriorityProtocol>
 
 // 提供设置“取消”、“确定”的block，避免在实例化方法中设置，导致代码块太大
 @property (nonatomic, copy) ClickBlock confirmBlock;

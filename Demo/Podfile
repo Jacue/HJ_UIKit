@@ -6,7 +6,6 @@ target 'Demo' do
    use_frameworks!
 
   # Pods for Demo
-    pod 'HJ_UIKit/HJPriorityManager', :path => '../'
     pod 'HJ_UIKit/HJAlertView', :path => '../'
 #    pod 'HJ_UIKit', :path => '../'
 

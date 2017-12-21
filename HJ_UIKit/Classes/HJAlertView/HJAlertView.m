@@ -10,12 +10,13 @@
 #import <YYText/YYText.h>
 #import <Masonry/Masonry.h>
 #import "NSBundle+HJAlertView.h"
+#import "HJPriorityManager.h"
 
 #define CenterViewEdgePadding 40
 #define CenterViewPaddingInset 18
 
 @interface HJAlertView()
-//@property (weak, nonatomic) IBOutlet UILabel *myMessageLabel;
+
 @property (strong, nonatomic)  UIView *maskLayer;
 @property (strong, nonatomic)  UIView *centerView;
 @property (strong, nonatomic)  UIButton *confirmButton;
@@ -23,7 +24,7 @@
 @property (strong, nonatomic)  UIButton *closeButton;
 @property (strong, nonatomic)  UIView *line1;
 @property (strong, nonatomic)  UIView *line2;
-//@property (weak, nonatomic) IBOutlet NSLayoutConstraint *messageLabelTopPadding;
+@property (nonatomic, strong) UIWindow *window;
 
 @end
 
@@ -216,9 +217,11 @@
 }
 
 - (void)show {
-    UIWindow *window = [[UIApplication sharedApplication] keyWindow];
+    UIWindow *window = [[UIWindow alloc]initWithFrame:[UIScreen mainScreen].bounds];
+    [window makeKeyAndVisible];
     [window endEditing:YES];
-    
+    self.window = window;
+
     [window addSubview:self];
     self.frame = [UIScreen mainScreen].bounds;
 }
@@ -262,7 +265,7 @@
         _cancelBlock();
     }
     if (!self.keepAlive) {
-        _confirmBlock = nil;
+        _cancelBlock = nil;
         [self dismissManually:YES];
     }
 }
@@ -289,12 +292,21 @@
 
 - (void)dismissManually:(BOOL)isManual {
     [self removeFromSuperview];
+    
+    [[HJPriorityManager sharedManager] dismissCurrentAlertViewManually:isManual];
 }
 
 #pragma mark - LNAlertProtocol
 
 - (NSInteger)level {
     return self.alertLevel;
+}
+
+- (void)dismissWithCompletion:(void (^)(void))completionBlock {
+    [self dismissManually:NO];
+    if (completionBlock) {
+        completionBlock();
+    }
 }
 
 #pragma mark - Getter

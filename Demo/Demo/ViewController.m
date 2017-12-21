@@ -8,6 +8,7 @@
 
 #import "ViewController.h"
 #import <HJ_UIKit/HJAlertView.h>
+#import <HJ_UIKit/HJPriorityManager.h>
 #import <YYText/YYText.h>
 
 @interface ViewController ()
@@ -31,12 +32,20 @@
         NSLog(@"this is tap test.");
     }];
 
-    HJAlertView *alertView = [[HJAlertView alloc] initWithTitle:@"this is title, maybe a little long" attributeMessage:messageString confirmButtonTitle:@"confirm" confirmBlock:nil];
-//    alertView.revokable = YES;
-    alertView.forceRead = YES;
-//    alertView.keepAlive = YES;
-    [alertView show];
+    HJAlertView *alertView1 = [[HJAlertView alloc] initWithTitle:@"Title1" attributeMessage:messageString confirmButtonTitle:@"confirm" confirmBlock:nil];
+//    alertView1.revokable = YES;
+    alertView1.forceRead = YES;
+//    alertView1.keepAlive = YES;
+    alertView1.alertLevel = 1;
+    [[HJPriorityManager sharedManager] show:alertView1 withBlock:^{
+        [alertView1 show];
+    }];
     
+    HJAlertView *alertView2 = [[HJAlertView alloc] initWithTitle:@"Title2" attributeMessage:messageString confirmButtonTitle:@"confirm" confirmBlock:nil];
+    alertView2.alertLevel = 1;
+    [[HJPriorityManager sharedManager] show:alertView2 withBlock:^{
+        [alertView2 show];
+    }];
 
 
     

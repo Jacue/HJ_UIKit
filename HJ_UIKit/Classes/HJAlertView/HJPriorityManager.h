@@ -31,7 +31,15 @@
  @param alertView 弹层
  @param alertBlock 弹层的展示操作
  */
-- (void)show:(id<HJPriorityProtocol>)alertView showBlock:(void(^)(void))alertBlock;
+- (void)show:(id<HJPriorityProtocol>)alertView withBlock:(void(^)(void))alertBlock;
+
+/**
+ 展示弹窗，并清除之前的所有的弹窗
+ 
+ @param alertView 弹层
+ @param alertBlock 弹层的展示操作
+ */
+- (void)showAlone:(id<HJPriorityProtocol> )alertView withBlock:(void(^)(void))alertBlock;
 
 
 /**
